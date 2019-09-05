@@ -1,0 +1,13 @@
+Kaavio lähetettäessä uusi kommentti /notes sivulta
+
+selain -> palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+	- Response Headers: content-type: text/html; charset=utf-8, Form Data: note: content
+	- palvelin kehottaa selainta tekemään heti GET pyynnön (jotta uusi päivitetty lista saadaan näkyviin)
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+palvelin -> selain: : HTML koodi (content-type: text/html)
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin -> selain: CSS koodi eli tiedosto main.css (content-type: text/css)
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+palvelin -> selain: Javascript koodi eli tiedosto main.js (content-type: application/javascript)
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+palvelin -> selain: JSON data eli uusi lisätyn kohdan sisältävä notes

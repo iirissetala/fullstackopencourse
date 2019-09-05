@@ -1,0 +1,7 @@
+Kaavio kun lähetetään uusi muistiinpano /spa osoitteesta
+
+selain -> palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+palvelin -> selain: päivitetty JSON data eli lista muistiinpanoista
+
+single-page appissa koko tapahtumaketju on kirjoitettu js-koodiin, joka suoritetaan selaimessa. GET pyyntö tapahtuu POST pyynnön
+seurauksena ja päivitetty lista renderöidään yhden ja saman pyynnön seurauksena

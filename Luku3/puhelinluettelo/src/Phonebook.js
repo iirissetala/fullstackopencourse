@@ -2,16 +2,16 @@ import React, {useState} from 'react'
 import Person from './Person'
 import Service from './services/phonebookService'
 
-const Phonebook = ({persons, setPersons, show, setShow}) => {
+const Phonebook = ({people, setPeople}) => {
     const [ showAll, setShowAll ] = useState(true)
     const [ searched, setSearced ] = useState('')
   
     
     const namesToShow = showAll
-        ? persons
-        : persons.filter(p => p.name.toLowerCase().includes(searched.toLowerCase()))
+        ? people
+        : people.filter(p => p.name.toLowerCase().includes(searched.toLowerCase()))
 
-    const addedPersons = () => namesToShow.map(person =>
+    const addedPeople = () => namesToShow.map(person =>
         <Person
             key={person.name}
             person={person}
@@ -22,7 +22,7 @@ const Phonebook = ({persons, setPersons, show, setShow}) => {
         Service
             .deletePerson(id)
             .then(
-                setPersons(persons.filter(p => p.id !== id))
+                setPeople(people.filter(p => p.id !== id))
             )
             
     }
@@ -38,7 +38,7 @@ const Phonebook = ({persons, setPersons, show, setShow}) => {
             <div>
             filter shown names by <input value={searched} onChange={handleSearch}></input>
             </div>
-            <div>{addedPersons()}</div>
+            <div>{addedPeople()}</div>
         </div>
 
     )

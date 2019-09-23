@@ -5,26 +5,26 @@ import Services from './services/phonebookService'
 
 
 const App = () => {
-    const [ persons, setPersons] = useState([]) 
+    const [ people, setPeople] = useState([]) 
     const [ show, setShow ] = useState(false)
 
     useEffect(() => {
       Services
         .getAll()
-        .then(receivedPersons => {
-          setPersons(receivedPersons)
+        .then(receivedPeople => {
+          setPeople(receivedPeople)
           console.log('data vastaanotettu ja puhelinluettelo alustettu')
         })
     }, [])
-    console.log('palautui', persons.length, 'henkilöä')
+    console.log('palautui', people.length, 'henkilöä')
 
     return (
       <div>
         <h2>Phonebook</h2>
-        <h3>Numbers</h3>
-        <Phonebook persons={persons} setPersons={setPersons} show={show} setShow={setShow} />
         <h3>Add new name</h3>
-        <FormNewPerson persons={persons} setPersons={setPersons} show={show} setShow={setShow} />        
+        <FormNewPerson people={people} setPeople={setPeople} show={show} setShow={setShow} />
+        <h3>Numbers</h3>
+        <Phonebook people={people} setPeople={setPeople} show={show} setShow={setShow} />   
       </div>
     )
   

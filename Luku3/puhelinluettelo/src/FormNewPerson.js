@@ -3,7 +3,7 @@ import Service from './services/phonebookService'
 import Notification from './Notification'
 
 
-const FormNewPerson = ({persons, setPersons, show, setShow}) => {
+const FormNewPerson = ({people, setPeople, show, setShow}) => {
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber ] = useState('')
     const [ message, setMessage ] = useState('')
@@ -16,44 +16,54 @@ const FormNewPerson = ({persons, setPersons, show, setShow}) => {
     const addName = (e) => {
         e.preventDefault()
         const newPerson = {name: newName, number: newNumber}
-        if (persons.some(person => person.name === newName)){
+        if (people.some(person => person.name === newName)){
             if(window.confirm(`${newName} is already in the phonebook, replace existing number?`)){
-                const person = persons.find(p => p.name === newName)
+                const person = people.find(p => p.name === newName)
                 const changedPerson = {...person, number: newNumber }
                 Service
                     .updateNumber(person.id, changedPerson)
                     .then(returnedPerson => {
-                        setPersons(persons.map(p => p.name !== newName ? p : returnedPerson))
+                        setPeople(people.map(p => p.name !== newName ? p : returnedPerson))
                         console.log(changedPerson, returnedPerson)
                     })
                     .catch(error => {
-                        setErrorMessage(
-                            `${newName} was already deleted from server`
-                        )
+                        console.log('ilmeni virhe:', error.message)
+                        setErrorMessage(`${newName} was already deleted from server`, error.message)
                         setShow(true)
                         setTimeout(() => {
-                            setErrorMessage(null)
+                            setErrorMessage('')
                             setShow(false)
-                        }, 5000)
-                        setPersons(persons.filter(p => p.name !== newName))
-                    })
-                    
-                }
+                        }, 3000)
+                        setPeople(people.filter(p => p.name !== newName))
+                    })       
+            }
+            setNewName('')
+            setNewNumber('')
         } else {
             Service
                 .createNew(newPerson)
-                .then(addedPerson => 
-                    setPersons(persons.concat(addedPerson)))
-  
-        }
-        setMessage(`Added: ${newName}`)
-        setShow(true)
-        setTimeout(() => {
-            setMessage(null)
-            setShow(false)
-        }, 3000)
-        setNewName('')
-        setNewNumber('')
+                .then(addedPerson => {
+                    setPeople(people.concat(addedPerson))
+                    setMessage(`Added: ${newName}`)
+                    setShow(true)
+                    setTimeout(() => {
+                        setMessage('')
+                        setShow(false)
+                    }, 3000)
+                })
+                .catch(error => {
+                    console.log('ilmeni virhe:', error.message)
+                    let errorData = JSON.stringify(error.response.data)
+                    setErrorMessage(errorData)
+                        setShow(true)
+                        setTimeout(() => {
+                            setErrorMessage('')
+                            setShow(false)
+                        }, 3000)
+                })
+                setNewName('')
+                setNewNumber('')
+            }
     }
 
     return (

@@ -2,16 +2,16 @@ import React from 'react'
 
 const Notification = ({errorMessage, message, show}) => {
 
-    if (message === null){
+    if (message === '' && errorMessage === '') {
         return null
     }
-    if (errorMessage !== null)
+    if (errorMessage !== '')
         return (
             <div>
                 {show && <div className='errormessage'> {errorMessage} </div>}
             </div>
     )
-    if (message !== null){
+    if (message !== ''){
         return (
             <div>
                 {show && <div className='message'> {message} </div>}

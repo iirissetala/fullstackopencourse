@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/persons'
+const url = '/api/persons'
 
 const getAll = () => {
   const request = axios.get(url)
@@ -10,9 +10,15 @@ const getAll = () => {
 
 const createNew = (newPerson) => {
   const request = axios.post(`${url}`, newPerson)
-    return request.then(response => {
-        return response.data
-    })
+    return request
+        .then(response => {
+            return (response.data)
+        })
+        .catch (error => {
+            console.log(error.response.data)
+            throw error
+        })
+    
 }
 
 const deletePerson = (id) => {
